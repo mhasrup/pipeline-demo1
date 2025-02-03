@@ -1,82 +1,48 @@
 pipeline {
 
 parameters {
-
 string(
-
 name: 'Env',
 description: 'DEV1, DEV2, DEV3, QA1, QAZ, QA3, PRF, PPD, ALL')
-
 string(
-
 name: 'AppServers',
 description: 'AppServer1, AppServer2, AppServer3, ALL')
-
 choice(
-
 name: 'Action',
 choices: "stop\nstart\nstatus\nvalidate\nclean")
-
 }
 
 stages {
 
 stage('CheckOutGit') {
-
 steps{
-
 script { currentBuild.displayName = "#${BUILD_NUMBER}-${params.environment}-${params.action}" }
-
 checkout([$class: 'GitSCM',
-
 branches: [[name: 'master']],
-
 doGenerateSubmoduleConfigurations: false,
-
 extensions: [],
-
 submoduleCfg: [],
-
 userRemoteConfigs: [[credentialsId: '',
-
 url: '']]])
-
 }
-
-}
-
 }
 
 stage('Stop Action') {
 when { expression { params. Action = "stop"}}
-
 steps{
-
 dir('stibo/ansible') {
-
 wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-
 script {
 
 String[] myEnv = params.Env.split(",");
-
 String[] myApp params.AppServers.split(",");
 
-sh "echo ${Env}"
-
 } //script
-
 }//wrap
-
 } //dir
-
 } // steps
-
-} // stage I
+} 
 
 }
 
-  
-
-
- }
+}
