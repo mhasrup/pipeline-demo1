@@ -62,6 +62,8 @@ String[] myEnv = params.Env.split(",");
 
 String[] myApp params.AppServers.split(",");
 
+sh "echo ${Env}"
+
 } //script
 
 }//wrap
